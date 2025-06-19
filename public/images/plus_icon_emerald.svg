@@ -1,0 +1,7 @@
+<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <!-- White circular background -->
+  <circle cx="24" cy="24" r="24" fill="white"/>
+  
+  <!-- Plus icon in emerald-300 (#6ee7b7) -->
+  <path d="M24 12v24M12 24h24" stroke="#6ee7b7" stroke-width="3" stroke-linecap="round"/>
+</svg>
