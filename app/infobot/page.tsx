@@ -87,7 +87,7 @@ ${input}`
                     ))}
                 </div>
 
-                <div className="mt-2 w-full flex gap-2 items-center">
+                <div className="mt-2 w-full flex gap-2 items-center px-1 sm:px-0 min-w-0 overflow-x-hidden">
                     <input
                         type="text"
                         value={input}
@@ -100,12 +100,10 @@ ${input}`
                         onClick={handleSend}
                         className="p-2 bg-emerald-600 hover:bg-emerald-700 rounded-md transition h-[7vh]"
                     >
-                        <Image src={Send} alt="Send" className="w-5 h-5" />
+                        <Image src={Send} alt="Send" className="w-4 h-4 sm:w-5 sm:h-5" />
                     </button>
                 </div>
             </div>
         </div>
-
-
     );
 }
