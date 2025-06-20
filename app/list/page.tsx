@@ -28,30 +28,35 @@ const getData = async (url: string): Promise<Country[]> => {
 const PAGE_SIZE = 16;
 
 export default function List() {
-
   const { setNationdata } = useContext(NationContext);
 
-  const handleNationdata = async (item: { flags: { png: string }, name: { common: string } }) => {
-    setNationdata({
-      flag: item.flags.png,
-      name: item.name.common,
-      loc: `https://maps.google.com/maps?q=${item.name.common}&output=embed`,
-    });
-  }
+  const [data, setData] = useState<Country[]>([]);
+  const [page, setPage] = useState(1);
 
   const { data: fulldata, isLoading, error } = useSWR<Country[]>(
     'https://restcountries.com/v3.1/all?fields=name,flags',
     getData
   );
 
-  const [data, setData] = useState<Country[]>([]);
-  const [page, setPage] = useState(1);
+  const [firstmount, setFirstMount] = useState<number>(0);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setFirstMount(prev => prev + 1);
+    }
+  }, [isLoading]);
+
+  const handleNationdata = (item: { flags: { png: string }, name: { common: string } }) => {
+    setNationdata({
+      flag: item.flags.png,
+      name: item.name.common,
+      loc: `https://maps.google.com/maps?q=${item.name.common}&output=embed`,
+    });
+  };
 
   useEffect(() => {
     const checkScroll = () => {
-      if (
-        window.innerHeight + window.scrollY + 1 >= document.documentElement.scrollHeight
-      ) {
+      if (window.innerHeight + window.scrollY + 1 >= document.documentElement.scrollHeight) {
         setPage((prev) => prev + 1);
       }
     };
@@ -63,13 +68,11 @@ export default function List() {
   useEffect(() => {
     if (fulldata) {
       const newItems = fulldata.slice(page * PAGE_SIZE - PAGE_SIZE, page * PAGE_SIZE);
-      setData([...data, ...newItems]);
+      setData(prev => [...prev, ...newItems]);
     }
   }, [page, fulldata]);
 
-  const[firstload,setFirstload]=useState<boolean>(false);
-
-  if (isLoading && !firstload){ setFirstload(true); return <Loading />};
+  if (isLoading && firstmount < 2) return <Loading />;
   if (error) return <div className="p-4 text-red-600">Error loading data</div>;
 
   return (
@@ -82,7 +85,7 @@ export default function List() {
           {data.map((item, i) => (
             <div
               key={i}
-              className="flex flex-col justify-between h-[40vh] p-4 bg-emerald-100 border border-emerald-300 rounded-xl shadow-md "
+              className="flex flex-col justify-between h-[40vh] p-4 bg-emerald-100 border border-emerald-300 rounded-xl shadow-md"
             >
               <h4 className="font-semibold text-emerald-800 mb-2 text-base">
                 {item.name.official}
@@ -101,7 +104,11 @@ export default function List() {
 
               <p className="text-sm text-gray-700 whitespace-normal">
                 {`It's also known as ${item.name.common}....`}
-                <Link onClick={() => handleNationdata(item)} className="text-blue-600 hover:underline ml-1" href="/info">
+                <Link
+                  onClick={() => handleNationdata(item)}
+                  className="text-blue-600 hover:underline ml-1"
+                  href="/info"
+                >
                   Know more
                 </Link>
               </p>
