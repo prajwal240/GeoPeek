@@ -84,20 +84,20 @@ ${input}`
                     ))}
                 </div>
 
-                <div className="mt-2 w-full flex gap-2 items-center">
+                <div className="mt-2 w-full flex items-center gap-2 px-2 sm:px-0 overflow-hidden">
                     <input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                         placeholder="Type a message..."
-                        className="flex-1 border rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-emerald-500 h-[7vh]"
+                        className="flex-1 border rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-emerald-500 h-[7vh] min-w-0"
                     />
                     <button
                         onClick={handleSend}
-                        className="p-2 bg-emerald-600 hover:bg-emerald-700 rounded-md transition h-[7vh]"
+                        className="p-2 bg-emerald-600 hover:bg-emerald-700 rounded-md transition h-[7vh] flex items-center justify-center"
                     >
-                        <Image src={Send} alt="Send" className="w-5 h-5" />
+                        <Image src={Send} alt="Send" width={20} height={20} />
                     </button>
                 </div>
             </div>
