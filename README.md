@@ -38,7 +38,7 @@ GeoPeek is a static, interactive, and educational web application that provides 
 ## Tech Stack
 
 - **Frontend**: React.js (with Next.js) / Typescript
-- **Styling**: Tailwind CSS / Custom CSS
+- **Styling**: Tailwind CSS 
 - **AI Model**: Gemini 2.0 Flash
 - **State Management**: React Hooks, Context API
 - **Maps**: Google Maps Embed (iframe)
